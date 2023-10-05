@@ -5,53 +5,11 @@
 // Declaring a variable that is the root for traversing the DOM
 var mainDiv = $('#mainDiv');
 var hourId = [];
+var currentTime = dayjs();
+var currentHour = currentTime.hour();
 
 // Setting the hour variable for day planner to start at the 9th hour
 var hour = 9;
-
-// Creating multiple time blocks for a 9am to 5pm day planner
-for (var i = 0; i < 9; i++) {
-  hourId[i] = 'hour-' + hour.toString();
-
-  var newDiv = $('<div>');
-  var anotherDiv = $('<div>');
-  var newText = $('<textarea>');
-  var newButton = $('<button>');
-  var newI = $('<i>');
-
-  newDiv.attr('id', hourId[i]);
-  newDiv.addClass('row time-block past');  // add and remove the class 'past' to present/future by using the addClass('') and remove('')
-
-  anotherDiv.addClass('col-2 col-md-1 hour text-center py-3');
-  if(i === 3) {
-    hourId[i] = 'hour-' + hour.toString();
-    anotherDiv.text(hour + 'PM');
-    hour = 0;
-  } else if (i < 3) {
-    anotherDiv.text(hour + 'AM');
-  } else {
-    anotherDiv.text(hour + 'PM');
-  }
-  
-  newText.addClass('col-8 col-md-10 description'); //
-  newText.attr('rows', '3');
-
-  newButton.addClass('btn saveBtn col-2 col-md-1');
-  newButton.attr('aria-label', 'save');
-
-  newI.addClass('as fa-save');
-  newI.attr('aria-hidden', 'true');
-
-  mainDiv.append(newDiv);
-  newDiv.append(anotherDiv);
-  newDiv.append(newText);
-  newDiv.append(newButton);
-  newButton.append(newI);
-  
-  hour++;
-}
-
-console.log(hourId);
 
 var saveButton = $('.saveBtn');
 
@@ -63,6 +21,60 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   //
+
+// Creating multiple time blocks for a 9am to 5pm day planner
+for (var i = 0; i < 9; i++) {
+  // Creating the id key for the timeblock, 'hour-x'
+  hourId[i] = 'hour-' + hour.toString();
+
+  // Creating new tags within the timeblock
+  var newDiv = $('<div>');
+  var anotherDiv = $('<div>');
+  var newText = $('<textarea>');
+  var newButton = $('<button>');
+  var newI = $('<i>');
+
+  // Setting the id attribute with the current iteration value in the array 'hourId'
+  newDiv.attr('id', hourId[i]);
+  // Checking the current time to the hour to appropriately add the class 'past', 'present', and 'future'
+  if(currentTime < hour){
+    newDiv.addClass('row time-block future');
+  }
+  if(currentTime === hour){
+    newDiv.addClass('row time-block present');
+  }
+  if(currentTime > hour){
+    newDiv.addClass('row time-block past');
+  }
+ 
+  // Checking the 
+  anotherDiv.addClass('col-2 col-md-1 hour text-center py-3');
+  if(hour > 12) {
+    anotherDiv.text(hour - 12 + 'PM');
+  } else if (hour < 12) {
+    anotherDiv.text(hour + 'AM');
+  } else {
+    anotherDiv.text (hour + 'PM');
+  }
+  hour++;
+
+  // Adding classes and setting attributes to the elements textarea, button, and italic
+  newText.addClass('col-8 col-md-10 description'); //
+  newText.attr('rows', '3');
+
+  newButton.addClass('btn saveBtn col-2 col-md-1');
+  newButton.attr('aria-label', 'save');
+
+  newI.addClass('as fa-save');
+  newI.attr('aria-hidden', 'true');
+
+  // Appending the elements to the mainDiv
+  mainDiv.append(newDiv);
+  newDiv.append(anotherDiv, newText, newButton);
+  newButton.append(newI);
+  
+  
+}
 
 
 
