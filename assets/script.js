@@ -1,17 +1,15 @@
-
-
 // Declaring a variable that is the root for traversing the DOM
 var mainDiv = $('#mainDiv');
 var hourId = [];
 var currentTime = dayjs();
 var currentHour = currentTime.hour();
 var dateDisplay = $('<h2>');
+var eventText;
+
 $('header').append(dateDisplay.text(currentTime.format('YYYY-MM-DD')));
 
 // Setting the hour variable for day planner to start at the 9th hour
 var hour = 9;
-
-var saveButton = $('.saveBtn');
 
 $(function () {
   // Creating multiple time blocks for a 9am to 5pm day planner
@@ -65,14 +63,20 @@ $(function () {
     newDiv.append(anotherDiv, newText, newButton);
     newButton.append(newI);
 
-
+    // Retrieving values from local storage to render on the page
+    eventText = localStorage.getItem(hourId[i]);
+    newText.text(eventText);
   }
 
 
-  $(saveButton).click(function (event) {
-    
 
-  });
+  $('button').on('click', (function (event) {
+    event.preventDefault(); 
+    var idValue = $(event.target).parent().attr('id');
+    var input = $(event.target).parent().siblings().eq(1).val();
+    console.log(idValue, input);
+    localStorage.setItem(idValue, input);
+  }));
 
 
 });
