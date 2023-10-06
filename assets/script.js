@@ -1,4 +1,4 @@
-// Declaring a variable that is the root
+// Declaring variable
 var mainDiv = $('#mainDiv');
 var currentTime = dayjs();
 var currentHour = currentTime.hour();
@@ -17,7 +17,7 @@ function timeDisplay() {
   dateDisplayEl.text(time);
 }
 
-// Displays the events pulled fromthe local storage
+// Displays the saved events from the local storage
 function displayEvents() {
   for (var i = 9; i < 18; i++) {
     // Create the key based on the hour
@@ -62,6 +62,7 @@ $(function () {
     } else {
       anotherDiv.text(hour + 'PM');
     }
+    //
     hour++;
 
     // Adding classes and setting attributes to the element tags textarea, button, and italic
@@ -86,11 +87,12 @@ $(function () {
   $('button').on('click', (function (event) {
     event.preventDefault();
 
+    // Assigning local variables to the event target's parent id and sibling element of textarea's value
     var idValue = $(event.target).parent().attr('id');
     var input = $(event.target).siblings('textarea').val();
 
+    // Saving the local variables' value to local storage
     localStorage.setItem(idValue, input);
-    
   }));
 
 });
