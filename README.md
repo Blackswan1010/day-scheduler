@@ -13,7 +13,7 @@
 
 Making a Day-planner with JQuery!
 
-Deployed Site []()
+Deployed Site [https://blackswan1010.github.io/day-scheduler/](https://blackswan1010.github.io/day-scheduler/)
 
 ## Jquery Examples
 ```js
