@@ -13,26 +13,13 @@ $('header').append(dateDisplayEl);
 
 // Displays the time in the header
 function timeDisplay() {
-  var time = currentTime.format('YYYY-MM-DD [at] hh:mm:ss A')
+  var time = currentTime.format('YYYY-MM-DD [at] hh:mm:ss A');
   dateDisplayEl.text(time);
 }
 
-// Displays the saved events from the local storage
-function displayEvents() {
-  for (var i = 9; i < 18; i++) {
-    // Create the key based on the hour
-    var key = 'hour-' + i.toString();
-    var eventText = localStorage.getItem(key);
-
-    // Find the corresponding time block and set its textarea value
-    $('#' + key).find('textarea').val(eventText);
-  }
-}
-
-
-$(function () { 
+$(function () {
   // Create multiple time blocks for 9am to 5pm day planner
-  for (var i = 0; i < 9; i++) {
+  for (var i = 9; i < 18; i++) {
     // Create new tags within the timeblock
     var newDiv = $('<div>');
     var anotherDiv = $('<div>');
@@ -80,7 +67,10 @@ $(function () {
     newDiv.append(anotherDiv, newText, newButton);
     newButton.append(newI);
 
-    displayEvents();
+    var key = 'hour-' + i.toString();
+    var eventText = localStorage.getItem(key);
+    // Find the corresponding time block and set its textarea value
+    $('#' + key).find('textarea').val(eventText);
   }
 
   // When button is clicked the key-value pair is saved to local storage
